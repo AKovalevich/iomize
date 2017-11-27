@@ -1,0 +1,7 @@
+pngquant:
+  name: test
+  pipes:
+  - name: pngquant
+    params:
+      c: c1
+      c2: c2
