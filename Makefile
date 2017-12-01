@@ -1,5 +1,5 @@
 APP?=iomize
-PROJECT?=gitlab.com/artemkovalevich00/${APP}
+PROJECT?=github.com/AKovalevich/${APP}
 
 # Use the 0.0.0 tag for testing, it shouldn't clobber any release builds
 RELEASE?=0.0.1

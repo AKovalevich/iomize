@@ -2,10 +2,9 @@ package pngquant
 
 import (
 	pngquant "github.com/AKovalevich/go-pngquant"
-	"image"
 )
 
-func HandlerPngquant(image *image.Image, params map[string]string) error {
+func HandlerPngquant(imageByte []byte, params map[string]string) ([]byte, error) {
 	args := []string{}
 
 	args = append(args,"-")
@@ -16,10 +15,12 @@ func HandlerPngquant(image *image.Image, params map[string]string) error {
 	args = append(args, "--output")
 	args = append(args, "./test.png")
 
-	compressedImage, err := pngquant.Compress(*image, args)
+	compressedImage, err := pngquant.CompressBytes(imageByte, args)
+	print("OPTPNG")
+	print(compressedImage)
 	if err != nil {
-		return err
+		print(err.Error())
+		return nil, err
 	}
-	image = &compressedImage
-	return nil
+	return compressedImage, nil
 }

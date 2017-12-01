@@ -9,12 +9,12 @@ import (
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gitlab.com/artemkovalevich00/iomize/pkg/config"
-	//"gitlab.com/artemkovalevich00/iomize/pkg/pipeline"
-	"gitlab.com/artemkovalevich00/iomize/pkg/server"
+	"github.com/AKovalevich/iomize/pkg/config"
+	//"github.com/AKovalevich/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/server"
 	log "github.com/AKovalevich/scrabbler/log/logrus"
-	"gitlab.com/artemkovalevich00/iomize/pkg/pipeline"
-	"gitlab.com/artemkovalevich00/iomize/pkg/entrypoint"
+	"github.com/AKovalevich/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/entrypoint"
 )
 
 var mainConfig *config.MainConfiguration

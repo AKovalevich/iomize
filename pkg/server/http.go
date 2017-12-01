@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	log "gitlab.com/artemkovalevich00/iomize/pkg/log/logrus"
+	log "github.com/AKovalevich/iomize/pkg/log/logrus"
 )
 
 func (server *Server) configureMainHttpServer() {

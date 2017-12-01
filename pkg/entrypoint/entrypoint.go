@@ -4,9 +4,9 @@ import (
 	"strings"
 	"fmt"
 
-	"gitlab.com/artemkovalevich00/iomize/pkg/route"
-	"gitlab.com/artemkovalevich00/iomize/pkg/pipeline"
-	"gitlab.com/artemkovalevich00/iomize/pkg/entrypoint/backend"
+	"github.com/AKovalevich/iomize/pkg/route"
+	"github.com/AKovalevich/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/entrypoint/backend"
 )
 
 // Base Entrypoint interface

@@ -8,7 +8,7 @@ import (
 	"sync"
 	"os"
 
-	"gitlab.com/artemkovalevich00/iomize/pkg/config"
+	"github.com/AKovalevich/iomize/pkg/config"
 )
 
 // Server is the reverse-proxy/load-balancer engine

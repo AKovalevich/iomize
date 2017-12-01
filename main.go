@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitlab.com/artemkovalevich00/iomize/cmd"
+	"github.com/AKovalevich/iomize/cmd"
 )
 
 func main() {

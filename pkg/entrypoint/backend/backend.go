@@ -3,11 +3,15 @@ package backend
 import (
 	"net/http"
 
-	"gitlab.com/artemkovalevich00/iomize/pkg/route"
-	"gitlab.com/artemkovalevich00/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/route"
+	"github.com/AKovalevich/iomize/pkg/pipeline"
 	"os"
+	"fmt"
+	"io/ioutil"
+	"log"
 	"image"
 	"image/png"
+	"bytes"
 )
 
 const (
@@ -37,10 +41,20 @@ func (txe *Entrypoint) Init(pipeLineList pipeline.PipeLineList) {
 				fImg1, _ := os.Open("./example.png")
 				defer fImg1.Close()
 				img, _, _ := image.Decode(fImg1)
-				pipeLineList["pngquant"].Exec(&img)
-				toimg, _ := os.Create("./example_optimized.png")
-				defer toimg.Close()
-				png.Encode(toimg, img)
+				var w bytes.Buffer
+				err = png.Encode(&w, img)
+				// decoder wants []byte, so read the whole file into a buffer
+				//inputBuf, err := ioutil.ReadFile("./example.png")
+				compressedImage, err := pipeLineList["pngquant"].Exec(w)
+				if err != nil {
+					log.Panic(err)
+				}
+				print(compressedImage)
+				err = ioutil.WriteFile("test2.png", compressedImage, 0775)
+				if err != nil {
+					fmt.Printf("error writing out resized image, %s\n", err)
+					os.Exit(1)
+				}
 			},
 		},
 	}

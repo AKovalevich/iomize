@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"gitlab.com/artemkovalevich00/iomize/pkg/entrypoint"
-	"gitlab.com/artemkovalevich00/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/entrypoint"
+	"github.com/AKovalevich/iomize/pkg/pipeline"
 )
 
 

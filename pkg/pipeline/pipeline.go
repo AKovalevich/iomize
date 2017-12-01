@@ -5,17 +5,15 @@ import (
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
-	"gitlab.com/artemkovalevich00/iomize/pkg/command/test"
 	log "github.com/AKovalevich/scrabbler/log/logrus"
 
-	"image"
-	"gitlab.com/artemkovalevich00/iomize/pkg/command/pngquant"
+	"github.com/AKovalevich/iomize/pkg/command/pngquant"
 )
 
 type PipeItem struct {
 	sync.RWMutex
 	Name string
-	Handler func(*image.Image, map[string]string) error
+	Handler func([]byte, map[string]string) ([]byte, error)
 	Validators []func() error
 }
 
@@ -41,7 +39,10 @@ func (p *PipeItem) Register() {
 	pipeItemScope[p.Name] = p
 }
 
-func (pl *PipeLine) Exec(image *image.Image) error {
+func (pl *PipeLine) Exec(originImageByte []byte) ([]byte, error) {
+	var compressedImageByte []byte
+	var err error
+
 	for _, e := range pl.Pipes {
 		e.Lock()
 		// Run validation handlers
@@ -53,26 +54,26 @@ func (pl *PipeLine) Exec(image *image.Image) error {
 		//}
 
 		if pipe, ok := pipeItemScope[e.Name]; ok {
-			err := pipe.Handler(image, e.Params)
+			compressedImageByte, err = pipe.Handler(originImageByte, e.Params)
 			if err != nil {
-				return err
+				return nil, err
 			}
 		}
 
 		e.Unlock()
 	}
 
-	return nil
+	return compressedImageByte, nil
 }
 
 // Initialize PipeLines from configuration file
 func InitPipelines(configPath string) (PipeLineList, error) {
 	// Register test command
-	pipeTest := &PipeItem{
-		Name: "test",
-		Handler: test.HandlerTest,
-	}
-	pipeTest.Register()
+	//pipeTest := &PipeItem{
+	//	Name: "test",
+	//	Handler: test.HandlerTest,
+	//}
+	//pipeTest.Register()
 
 	pipePngquant := &PipeItem{
 		Name: "pngquant",

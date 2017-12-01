@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"gitlab.com/artemkovalevich00/iomize/pkg/version"
+	"github.com/AKovalevich/iomize/pkg/version"
 	"runtime"
 )
 

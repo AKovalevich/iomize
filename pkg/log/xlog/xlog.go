@@ -3,7 +3,7 @@ package xlog
 import (
 	"os"
 
-	"gitlab.com/artemkovalevich00/iomize/pkg/log"
+	"github.com/AKovalevich/iomize/pkg/log"
 	"github.com/rs/xlog"
 )
 
