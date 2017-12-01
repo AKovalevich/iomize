@@ -9,9 +9,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"image"
-	"image/png"
-	"bytes"
 )
 
 const (
@@ -38,14 +35,8 @@ func (txe *Entrypoint) Init(pipeLineList pipeline.PipeLineList) {
 		{
 			Path: "/" + DefaultApiPrefix +  "/hello",
 			Handler: func(w http.ResponseWriter, r *http.Request) {
-				fImg1, _ := os.Open("./example.png")
-				defer fImg1.Close()
-				img, _, _ := image.Decode(fImg1)
-				var w bytes.Buffer
-				err = png.Encode(&w, img)
-				// decoder wants []byte, so read the whole file into a buffer
-				//inputBuf, err := ioutil.ReadFile("./example.png")
-				compressedImage, err := pipeLineList["pngquant"].Exec(w)
+				inputBuf, err := ioutil.ReadFile("./example.png")
+				compressedImage, err := pipeLineList["pngquant"].Exec(inputBuf)
 				if err != nil {
 					log.Panic(err)
 				}
@@ -55,6 +46,7 @@ func (txe *Entrypoint) Init(pipeLineList pipeline.PipeLineList) {
 					fmt.Printf("error writing out resized image, %s\n", err)
 					os.Exit(1)
 				}
+				fmt.Fprintf(w, "Test")
 			},
 		},
 	}

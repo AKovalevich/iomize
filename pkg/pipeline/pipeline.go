@@ -8,6 +8,7 @@ import (
 	log "github.com/AKovalevich/scrabbler/log/logrus"
 
 	"github.com/AKovalevich/iomize/pkg/command/pngquant"
+	"github.com/AKovalevich/iomize/pkg/command/lilliput"
 )
 
 type PipeItem struct {
@@ -43,6 +44,10 @@ func (pl *PipeLine) Exec(originImageByte []byte) ([]byte, error) {
 	var compressedImageByte []byte
 	var err error
 
+	if len(compressedImageByte) <= 0 {
+		compressedImageByte = originImageByte
+	}
+
 	for _, e := range pl.Pipes {
 		e.Lock()
 		// Run validation handlers
@@ -54,7 +59,7 @@ func (pl *PipeLine) Exec(originImageByte []byte) ([]byte, error) {
 		//}
 
 		if pipe, ok := pipeItemScope[e.Name]; ok {
-			compressedImageByte, err = pipe.Handler(originImageByte, e.Params)
+			compressedImageByte, err = pipe.Handler(compressedImageByte, e.Params)
 			if err != nil {
 				return nil, err
 			}
@@ -68,12 +73,12 @@ func (pl *PipeLine) Exec(originImageByte []byte) ([]byte, error) {
 
 // Initialize PipeLines from configuration file
 func InitPipelines(configPath string) (PipeLineList, error) {
-	// Register test command
-	//pipeTest := &PipeItem{
-	//	Name: "test",
-	//	Handler: test.HandlerTest,
-	//}
-	//pipeTest.Register()
+	// Register lilliput command
+	pipeTest := &PipeItem{
+		Name: "lilliput",
+		Handler: lilliput.HandlerLilliput,
+	}
+	pipeTest.Register()
 
 	pipePngquant := &PipeItem{
 		Name: "pngquant",
