@@ -6,5 +6,5 @@ import (
 
 type Route struct {
 	Handler func(http.ResponseWriter, *http.Request)
-	Path string
+	Path    string
 }

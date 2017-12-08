@@ -3,28 +3,28 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"runtime"
+	"strconv"
 
+	"github.com/AKovalevich/iomize/pkg/config"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/AKovalevich/iomize/pkg/config"
 	//"github.com/AKovalevich/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/entrypoint"
+	"github.com/AKovalevich/iomize/pkg/pipeline"
 	"github.com/AKovalevich/iomize/pkg/server"
 	log "github.com/AKovalevich/scrabbler/log/logrus"
-	"github.com/AKovalevich/iomize/pkg/pipeline"
-	"github.com/AKovalevich/iomize/pkg/entrypoint"
 )
 
 var mainConfig *config.MainConfiguration
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "serve",
+	Use: "serve",
 	//TraverseChildren: true,
 	Short: "Oimize",
-	Long: `Oimizer is a CLI library for compression and optimization image.`,
+	Long:  `Oimizer is a CLI library for compression and optimization image.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		start(mainConfig)
 	},

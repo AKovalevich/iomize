@@ -1,8 +1,9 @@
-package pngquant
+package optipng
 
 import (
-	pngquant "github.com/AKovalevich/go-pngquant"
+	optipng "github.com/AKovalevich/go-optipng"
 )
+
 
 func HandlerPngquant(imageByte []byte, params map[string]string) ([]byte, error) {
 	args := []string{}
@@ -15,9 +16,8 @@ func HandlerPngquant(imageByte []byte, params map[string]string) ([]byte, error)
 	//args = append(args, "--output")
 	//args = append(args, "./test.png")
 
-	compressedImage, err := pngquant.CompressBytes(imageByte, args)
+	compressedImage, err := optipng.CompressBytes(imageByte, args)
 	if err != nil {
-		print(err.Error())
 		return nil, err
 	}
 	return compressedImage, nil

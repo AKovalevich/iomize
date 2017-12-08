@@ -1,8 +1,6 @@
 package lilliput
 
 import (
-	"fmt"
-	"os"
 	"github.com/discordapp/lilliput"
 )
 
@@ -21,22 +19,16 @@ func HandlerLilliput(imageByte []byte, params map[string]string) ([]byte, error)
 	// this error reflects very basic checks,
 	// mostly just for the magic bytes of the file to match known image formats
 	if err != nil {
-		fmt.Printf("error decoding image, %s\n", err)
-		os.Exit(1)
+		return nil, err
 	}
 	defer decoder.Close()
 
-	header, err := decoder.Header()
+	_, err = decoder.Header()
 	// this error is much more comprehensive and reflects
 	// format errors
 	if err != nil {
-		fmt.Printf("error reading image header, %s\n", err)
-		os.Exit(1)
+		return nil, err
 	}
-
-	// print some basic info about the image
-	fmt.Printf("image type: %s\n", decoder.Description())
-	fmt.Printf("%dpx x %dpx\n", header.Width(), header.Height())
 
 	// get ready to resize image,
 	// using 8192x8192 maximum resize buffer size
@@ -46,10 +38,8 @@ func HandlerLilliput(imageByte []byte, params map[string]string) ([]byte, error)
 	// create a buffer to store the output image, 50MB in this case
 	outputImg := make([]byte, 50*1024*1024)
 
-
 	outputWidth = 50
 	outputHeight = 50
-
 
 	resizeMethod := lilliput.ImageOpsFit
 	if stretch {

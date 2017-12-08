@@ -1,12 +1,12 @@
 package entrypoint
 
 import (
-	"strings"
 	"fmt"
+	"strings"
 
-	"github.com/AKovalevich/iomize/pkg/route"
-	"github.com/AKovalevich/iomize/pkg/pipeline"
 	"github.com/AKovalevich/iomize/pkg/entrypoint/backend"
+	"github.com/AKovalevich/iomize/pkg/pipeline"
+	"github.com/AKovalevich/iomize/pkg/route"
 )
 
 // Base Entrypoint interface

@@ -8,7 +8,6 @@ import (
 	"github.com/AKovalevich/iomize/pkg/pipeline"
 )
 
-
 const (
 	// DefaultGraceTimeout controls how long Scrabbler serves pending requests
 	// prior to shutting down.
@@ -22,17 +21,17 @@ const (
 type MainConfiguration struct {
 	sync.RWMutex
 	// Main configuration
-	Debug			bool					`yaml:"debug"`
-	LogLevel		string					`yaml:"log_level"`
-	ConfigFilePath	string					`yaml:"config_file_path"`
+	Debug          bool   `yaml:"debug"`
+	LogLevel       string `yaml:"log_level"`
+	ConfigFilePath string `yaml:"config_file_path"`
 	// Scrabbler server configuration
-	Port			string					`yaml:"port"`
-	Host			string					`yaml:"host"`
+	Port string `yaml:"port"`
+	Host string `yaml:"host"`
 	// Shutdown configuration
-	GraceTimeOut 	int 					`yaml:"grace_time_out"`
-	PipeConfigPath	string					`yaml:"pipe_config_path"`
-	EntryPoints 	entrypoint.EntrypointList
-	PipeLineList	pipeline.PipeLineList
+	GraceTimeOut   int    `yaml:"grace_time_out"`
+	PipeConfigPath string `yaml:"pipe_config_path"`
+	EntryPoints    entrypoint.EntrypointList
+	PipeLineList   pipeline.PipeLineList
 }
 
 func NewConfiguration() *MainConfiguration {

@@ -1,9 +1,9 @@
 package server
 
 import (
+	"os"
 	"os/signal"
 	"syscall"
-	"os"
 
 	log "github.com/AKovalevich/scrabbler/log/logrus"
 )

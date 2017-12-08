@@ -7,11 +7,11 @@ import (
 )
 
 const (
-	VERSION = "0.0.1"
+	VERSION  = "0.0.1"
 	CODENAME = "oimize"
 )
 
-func Current() (string) {
+func Current() string {
 	v1, err := version.NewVersion(VERSION)
 	if err != nil {
 		log.Print("")

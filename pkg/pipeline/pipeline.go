@@ -1,32 +1,34 @@
 package pipeline
 
 import (
-	"sync"
 	"io/ioutil"
+	"sync"
+
+	log "github.com/AKovalevich/scrabbler/log/logrus"
+	"github.com/AKovalevich/iomize/pkg/profiler"
 
 	"gopkg.in/yaml.v2"
-	log "github.com/AKovalevich/scrabbler/log/logrus"
-
-	"github.com/AKovalevich/iomize/pkg/command/pngquant"
 	"github.com/AKovalevich/iomize/pkg/command/lilliput"
+	"github.com/AKovalevich/iomize/pkg/command/pngquant"
+	"time"
 )
 
 type PipeItem struct {
 	sync.RWMutex
-	Name string
-	Handler func([]byte, map[string]string) ([]byte, error)
+	Name       string
+	Handler    func([]byte, map[string]string) ([]byte, error)
 	Validators []func() error
 }
 
 type PipeItemInfo struct {
 	sync.RWMutex
-	Name string
+	Name   string
 	Params map[string]string
 }
 
 type PipeLine struct {
 	sync.RWMutex
-	Name string
+	Name  string
 	Pipes []*PipeItemInfo
 }
 
@@ -59,10 +61,15 @@ func (pl *PipeLine) Exec(originImageByte []byte) ([]byte, error) {
 		//}
 
 		if pipe, ok := pipeItemScope[e.Name]; ok {
+			print("\n")
+			log.Do.Debug("Started processing pipe: " + pipe.Name)
+			profilerTime := time.Now()
 			compressedImageByte, err = pipe.Handler(compressedImageByte, e.Params)
 			if err != nil {
 				return nil, err
 			}
+			profiler.TimeTrack(profilerTime, pipe.Name)
+			log.Do.Debug("Finished processing pipe: " + pipe.Name)
 		}
 
 		e.Unlock()
@@ -75,16 +82,22 @@ func (pl *PipeLine) Exec(originImageByte []byte) ([]byte, error) {
 func InitPipelines(configPath string) (PipeLineList, error) {
 	// Register lilliput command
 	pipeTest := &PipeItem{
-		Name: "lilliput",
+		Name:    "lilliput",
 		Handler: lilliput.HandlerLilliput,
 	}
 	pipeTest.Register()
 
 	pipePngquant := &PipeItem{
-		Name: "pngquant",
+		Name:    "pngquant",
 		Handler: pngquant.HandlerPngquant,
 	}
 	pipePngquant.Register()
+
+	optipng := &PipeItem{
+		Name:    "optipng",
+		Handler: pngquant.HandlerPngquant,
+	}
+	optipng.Register()
 
 	pipeLineList, err := readPipeLineFromFile(configPath)
 	if err != nil {
@@ -95,7 +108,7 @@ func InitPipelines(configPath string) (PipeLineList, error) {
 }
 
 // Read PipeLineList from configuration file
-func readPipeLineFromFile(configPath string) (PipeLineList, error)  {
+func readPipeLineFromFile(configPath string) (PipeLineList, error) {
 	var pipeLineList PipeLineList
 
 	file, err := ioutil.ReadFile(configPath)

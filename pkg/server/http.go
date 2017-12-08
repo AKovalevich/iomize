@@ -21,8 +21,8 @@ func (server *Server) configureMainHttpServer() {
 		}
 	}
 	server.mainHttpServer = &http.Server{
-		Handler: s,
-		Addr: server.mainConfiguration.Host + ":" + server.mainConfiguration.Port,
+		Handler:      s,
+		Addr:         server.mainConfiguration.Host + ":" + server.mainConfiguration.Port,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}

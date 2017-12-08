@@ -1,12 +1,12 @@
 package server
 
 import (
-	"os/signal"
-	"net/http"
 	"context"
-	"time"
-	"sync"
+	"net/http"
 	"os"
+	"os/signal"
+	"sync"
+	"time"
 
 	"github.com/AKovalevich/iomize/pkg/config"
 )
@@ -14,9 +14,9 @@ import (
 // Server is the reverse-proxy/load-balancer engine
 type Server struct {
 	mainConfiguration *config.MainConfiguration
-	signals							chan os.Signal
-	stopChan						chan bool
-	mainHttpServer					*http.Server
+	signals           chan os.Signal
+	stopChan          chan bool
+	mainHttpServer    *http.Server
 }
 
 func NewServer(config *config.MainConfiguration) Server {
@@ -63,7 +63,7 @@ func (server *Server) Stop() {
 	server.Close()
 }
 
-func (server * Server) Close() {
+func (server *Server) Close() {
 	// Close Web UI HTTP server
 	signal.Stop(server.signals)
 	close(server.signals)

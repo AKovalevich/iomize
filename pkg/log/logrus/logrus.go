@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	Do	log.Logger
+	Do log.Logger
 )
 
 func init() {

@@ -1,8 +1,8 @@
 package log
 
 import (
-	"strconv"
 	"io"
+	"strconv"
 )
 
 type Level int
@@ -50,8 +50,8 @@ type Logger interface {
 type Config struct {
 	Level
 	Fields
-	Out io.Writer
-	Err io.Writer
+	Out  io.Writer
+	Err  io.Writer
 	Time bool
-	UTC bool
+	UTC  bool
 }

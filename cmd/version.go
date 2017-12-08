@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/spf13/cobra"
 	"github.com/AKovalevich/iomize/pkg/version"
+	"github.com/spf13/cobra"
 	"runtime"
 )
 
@@ -20,9 +20,9 @@ OS/Arch:      %s`
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Current version of oimize",
-	Long: `Oimize is a CLI library for compression and optimization of images.`,
+	Long:  `Oimize is a CLI library for compression and optimization of images.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf(VersionTemplate + "\n",
+		fmt.Printf(VersionTemplate+"\n",
 			version.Current(),
 			version.Codename(),
 			runtime.Version(),
